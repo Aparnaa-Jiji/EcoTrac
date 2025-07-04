@@ -1,10 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <!-- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EcoTrac - Register</title>
+    <meta name="description" content="Create your EcoTrac account">
+
+    <script>
+        document.documentElement.classList.remove('no-js');
+        document.documentElement.classList.add('js');
+    </script>
+
+    <!-- CSS
+    ================================================== -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/vendor.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/icons/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/icons/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icons/favicon-16x16.png' %}">
 </head>
-<body>
+
+<body id="top" class="register-page">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader" class="dots-fade">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- page wrap
+    ================================================== -->
+    <div id="page" class="s-pagewrap">
+
+        <!-- site header
+        ================================================== -->
+        <header class="s-header">
+            <div class="container s-header__content">
+                <div class="s-header__block">
+                    <a href="{% url 'home' %}" class="s-header__logo">
+                        <img src="{% static 'images/logo.svg' %}" alt="EcoTrac">
+                    </a>
+                </div>
+            </div> <!-- end s-header__content -->
+        </header> <!-- end s-header -->
+
+        <!-- content
+        ================================================== -->
+        <section class="container s-content">
+            <div class="row">
+                <div class="column xl-6 lg-8 md-10 auth-form">
+                    <h1>Create Account</h1>
+                    
+                    {% if messages %}
+                        <div class="messages">
+                            {% for message in messages %}
+                                <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    
+                    <form method="post" action="{% url 'register' %}">
+                        {% csrf_token %}
+                        <div class="form-field">
+                            {{ form.username.label_tag }}
+                            {{ form.username }}
+                            {% if form.username.errors %}
+                                <div class="error">{{ form.username.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-field">
+                            {{ form.password1.label_tag }}
+                            {{ form.password1 }}
+                            {% if form.password1.errors %}
+                                <div class="error">{{ form.password1.errors }}</div>
+                            {% endif %}
+                            <small class="help-text">{{ form.password1.help_text }}</small>
+                        </div>
+                        
+                        <div class="form-field">
+                            {{ form.password2.label_tag }}
+                            {{ form.password2 }}
+                            {% if form.password2.errors %}
+                                <div class="error">{{ form.password2.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <button type="submit" class="btn btn--primary full-width">Register</button>
+                    </form>
+                    
+                    <div class="auth-links">
+                        <p>Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
+                        <p><a href="{% url 'home' %}">Back to home</a></p>
+                    </div>
+                </div>
+            </div>
+        </section> <!-- end s-content -->
+
+    </div> <!-- end page-wrap -->
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 
 </body>
 </html>
